@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% load tailwind_filters %} {% block blockname %}
+
+<div class="fixed top-4 right-4 z-50">
+  <a href="{% url 'register' %}" class="glow-button">
+    Crear nueva cuenta
+  </a>
+</div>
+
+
+<body
+  class="min-h-screen bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] flex items-center justify-center"
+>
+  <h1
+    class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-500 animate-gradient-x text-center px-4"
+  >
+    Inicio de sesion
+  </h1>
+
+  <form action="" method="post" class="mt-10 space-y-6">
+    {% csrf_token %} {{ form|crispy }}
+
+    <button type="submit" class="glow-button" >Iniciar sesion</button>
+  </form>
+
+</body>
+{% endblock blockname %}
