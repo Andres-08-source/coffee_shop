@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block blockname %} 
+
+<div class="max-w-4xl mx-auto p-6 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-lg text-white mt-10">
+
+    <!-- Encabezado con usuario y botón de logout -->
+    <div class="flex justify-between items-center mb-6">
+        <p class="text-lg font-semibold text-indigo-200">
+            👋 Hola, {{ user.username|title }}
+        </p>
+
+    </div>
+
+    <!-- Título -->
+    <h2 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900 mb-6 animate-gradient-x">
+        Detalles de tu Orden 🧾
+    </h2>
+
+    <!-- Info Usuario y Fecha -->
+    <div class="space-y-2 text-indigo-200">
+        <div>
+            <span class="font-semibold">👤 Usuario:</span>
+            <span>{{ order.user.username|title }}</span>
+        </div>
+        <div>
+            <span class="font-semibold">🕒 Fecha de la Orden:</span>
+            <span>{{ order.order_date|date:"F j, Y H:i" }}</span>
+        </div>
+    </div>
+
+    <!-- Lista de productos en la orden -->
+    <div class="mt-8">
+        <h3 class="text-2xl font-semibold text-indigo-300 mb-4">🛍️ Artículos en tu orden</h3>
+        
+        {% for product_order in order.orderproduct_set.all %}
+            <div class="flex justify-between items-center py-3 px-4 bg-gray-800 rounded-xl mb-2 shadow-md hover:shadow-indigo-700 transition duration-300">
+                <div class="text-white text-lg">{{ product_order.product.name }}</div>
+                <div class="text-indigo-400 font-semibold">${{ product_order.product.price }}</div>
+            </div>
+        {% empty %}
+            <div class="text-red-400 font-semibold">❌ No hay artículos en tu orden</div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="flex justify-end">
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button 
+        type="submit" 
+        class="glow-button text-sm px-3 py-1 rounded-md shadow-md hover:shadow-indigo-600 transition duration-300"
+        style="min-width: 90px;"
+      >
+        Cerrar sesión
+      </button>
+    </form>
+</div>
+
+{% endblock blockname %}

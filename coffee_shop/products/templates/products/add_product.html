@@ -1,6 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Agregar Producto</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-<form action=' {% url "add_product" %}' method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit">Guardar</button>
-</form>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+    }
+
+    .glow-button {
+      position: relative;
+      display: inline-block;
+      padding: 0.75rem 3rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      background: #0f0c29;
+      border-radius: 9999px;
+      z-index: 0;
+      overflow: hidden;
+      border: none;
+    }
+
+    .glow-button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(
+        270deg,
+        #6a00f4,
+        #0b1b4d,
+        #4a00e0,
+        #000000,
+        #1a237e
+      );
+      background-size: 600% 600%;
+      z-index: -1;
+      filter: blur(6px);
+      animation: gradientMove 8s ease infinite;
+      border-radius: 9999px;
+    }
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center p-8 text-white">
+
+  <div class="w-full max-w-xl bg-black bg-opacity-60 p-8 rounded-2xl shadow-2xl">
+    <h1 class="text-3xl font-bold mb-6 text-center text-white">Agregar Producto</h1>
+
+    {% if messages %}
+  <div class="mb-6">
+    {% for message in messages %}
+      <div class="p-4 rounded text-white
+        {% if message.tags == 'success' %}bg-green-600
+        {% elif message.tags == 'error' %}bg-red-600
+        {% else %}bg-gray-600
+        {% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+    <form action="{% url 'add_products' %}" method="post" enctype="multipart/form-data" class="space-y-6">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <div>
+        <label class="block text-sm font-medium text-gray-300">Nombre</label>
+        {{ form.name }}
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-300">Descripción</label>
+        {{ form.description }}
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-300">Precio</label>
+        {{ form.price }}
+      </div>
+
+      <div class="flex items-center space-x-2">
+        {{ form.avaliable }}
+        <label class="text-sm font-medium text-gray-300">Disponible</label>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-300">Foto</label>
+        {{ form.photo }}
+      </div>
+
+      <div class="text-center pt-4">
+        <button type="submit" class="glow-button">Guardar Producto</button>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>
