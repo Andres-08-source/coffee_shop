@@ -172,3 +172,7 @@ depuración de cython/
 #.idea/
 
 # Fin de https://www.toptal.com/developers/gitignore/api/django
+
+# .gitignore
+.idea/
+coffe_env/
