@@ -52,9 +52,13 @@
     <p class="text-indigo-300 text-sm">${{ product.price }}</p>
     <p class="text-gray-400 text-sm">{{ product.description }}</p>
 
-    <button class="mt-4 glow-button">
-      Add to Cart
-    </button>
+    <form method="post" action="{% url 'add_to_cart' %}">
+        {% csrf_token %}
+        <input type="hidden" name="product" value="{{ product.id }}">
+        <button class="mt-4 glow-button">
+            Add to Cart
+        </button>
+    </form>
   </div>
   {% endfor %}
 </div>
